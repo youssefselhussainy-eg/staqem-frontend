@@ -15,7 +15,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* تظبيط الحاوية اللي ضفناها في App.jsx */
+/* تظبيط الحاوية الأساسية */
 .app-shell {
   min-height: 100vh;
   display: flex;
@@ -23,9 +23,8 @@ html, body {
   width: 100%;
 }
 
-/* قواعد ذكية للموبايل (Media Queries) */
+/* قواعد ذكية للموبايل فقط (Media Queries) */
 @media (max-width: 768px) {
-  /* تظبيط الحاويات عشان متبقاش مخنوقة في الموبايل */
   .container, [class*="container"] {
     width: 100% !important;
     padding-left: 1rem !important;
@@ -33,57 +32,40 @@ html, body {
     margin: 0 auto !important;
   }
 
-  /* تصغير الخطوط الكبيرة أوتوماتيك عشان م تكسرش السطور */
   h1 { font-size: 1.75rem !important; }
   h2 { font-size: 1.5rem !important; }
   
-  /* تظبيط الصور والجيفات عشان متخرجش بره الشاشة */
   img, video, canvas, gif {
     max-width: 100% !important;
     height: auto !important;
   }
 
-  /* لو عندك جداول، بتخليها قابلة للسحب يمين وشمال بدل ما تبوظ العرض */
-  table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* تظبيط المسافات (Margins) اللي بتبقى كبيرة في الديسكتوب */
-  .p-10, .p-20 { padding: 1.5rem !important; }
-  .m-10, .m-20 { margin: 1rem !important; }
-
-  /* --- 🛠️ لمسات إضافية بناءً على صور الـ UI --- */
-  
-  /* تظبيط زحمة أزرار الهيدر */
+  /* تظبيط زحمة أزرار الهيدر في الموبايل فقط */
   .flex-wrap {
     gap: 0.5rem !important;
+  }
+
+  /* تصغير حجم أزرار الأيقونات في الموبايل فقط */
+  .h-12.w-12, .h-14.w-14 {
+    height: 2.75rem !important;
+    width: 2.75rem !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
   }
 
-  /* تصغير حجم أزرار الأيقونات في الموبايل عشان متخبطش في بعضها */
-  .h-12.w-12, .h-14.w-14 {
-    height: 2.8rem !important;
-    width: 2.8rem !important;
-    border-radius: 0.75rem !important;
-  }
-
-  /* تظبيط الـ Search Bar عشان مياكلش الشاشة */
-  .relative.group.h-12, .relative.group.h-14 {
-    height: 2.8rem !important;
-    width: 100% !important; /* خليه ياخد العرض كله لو الشاشة ضيقة */
-    max-width: 250px;
-  }
-
-  /* تظبيط المدخلات (Inputs) في الـ Login/Signup */
-  input, select {
-    padding: 0.75rem !important;
-    font-size: 14px !important;
-  }
+  .p-10, .p-20 { padding: 1.5rem !important; }
 }
 
-/* تظبيط الـ Modals (زي ExerciseModal و Chat) لتناسب شاشة الموبايل */
+/* --- 🔧 إصلاح أيقونة البروفايل (Desktop + Mobile) --- */
+/* ده السطر اللي هيخلي الأيقونة ترجع سنتر وتظبط */
+button, .ProfileButton, [class*="ProfileButton"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* تظبيط الـ Modals */
 [class*="modal"], [role="dialog"] {
   width: 95% !important;
   max-width: 95vw !important;
