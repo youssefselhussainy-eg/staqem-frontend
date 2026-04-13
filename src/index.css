@@ -4,7 +4,9 @@
   --color-staqemBlue: #2563eb;
 }
 
-/* --- 📱 إعدادات الموبايل (من غير بعص في الزراير) --- */
+/* --- 📱 إعدادات الموبايل (نضيفة ومحكومة) --- */
+
+/* منع السكرول العرضي تماماً وضمان تناسق الأبعاد */
 html, body {
   max-width: 100%;
   overflow-x: hidden;
@@ -20,6 +22,7 @@ html, body {
   width: 100%;
 }
 
+/* قواعد الموبايل - لا تغير الـ Display للأزرار */
 @media (max-width: 768px) {
   /* تصغير المسافات في الموبايل فقط */
   .p-10, .p-20 { padding: 1.25rem !important; }
@@ -27,21 +30,23 @@ html, body {
   
   h1 { font-size: 1.5rem !important; }
 
-  /* تظبيط مقاسات حاويات الأيقونات في الموبايل */
+  /* تظبيط مقاسات الحاويات المربعة (زي Profile و Bell) */
+  /* استهدفنا الـ Classes اللي محتاجة تكون مربعة بس */
   .h-12.w-12, .h-14.w-14 {
     height: 2.75rem !important;
     width: 2.75rem !important;
   }
   
+  /* تظبيط مقاس حاوية البحث */
   .relative.group.h-12, .relative.group.h-14 {
     height: 2.75rem !important;
   }
 }
 
-/* منع أي سكرول عرضي ناتج عن الـ Modals */
+/* تظبيط الـ Modals لضمان عدم خروجها عن الشاشة */
 [class*="modal"], [role="dialog"] {
   max-width: 95vw !important;
   margin: auto !important;
 }
 
-/* ❌ شيلنا أي CSS كان بيفرض Flex على الزراير عشان الـ Theme Toggle يرجع يتحرك صح */
+/* ✅ تم مسح كل ما يتعلق بـ display: flex !important للزراير */
