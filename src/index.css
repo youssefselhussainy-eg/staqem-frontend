@@ -4,70 +4,48 @@
   --color-staqemBlue: #2563eb;
 }
 
-/* --- 📱 إعدادات الـ Mobile View العالمية --- */
-
-/* منع السكرول العرضي تماماً وضمان تناسق الأبعاد */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* تظبيط الحاوية الأساسية */
-.app-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-/* قواعد ذكية للموبايل فقط (Media Queries) */
+/* --- 📱 إعدادات الموبايل (مفصولة تماماً عن الديسكتوب) --- */
 @media (max-width: 768px) {
-  .container, [class*="container"] {
-    width: 100% !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    margin: 0 auto !important;
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
-  h1 { font-size: 1.75rem !important; }
-  h2 { font-size: 1.5rem !important; }
-  
-  img, video, canvas, gif {
-    max-width: 100% !important;
-    height: auto !important;
-  }
-
-  /* تظبيط زحمة أزرار الهيدر في الموبايل فقط */
-  .flex-wrap {
-    gap: 0.5rem !important;
-  }
-
-  /* تصغير حجم أزرار الأيقونات في الموبايل فقط */
+  /* تصغير الزراير والبحث في الموبايل فقط */
   .h-12.w-12, .h-14.w-14 {
     height: 2.75rem !important;
     width: 2.75rem !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
   }
 
-  .p-10, .p-20 { padding: 1.5rem !important; }
+  .relative.group.h-12, .relative.group.h-14 {
+    height: 2.75rem !important;
+  }
+
+  h1 { font-size: 1.5rem !important; }
+  .p-10, .p-20 { padding: 1.25rem !important; }
 }
 
-/* --- 🔧 إصلاح أيقونة البروفايل (Desktop + Mobile) --- */
-/* ده السطر اللي هيخلي الأيقونة ترجع سنتر وتظبط */
-button, .ProfileButton, [class*="ProfileButton"] {
-  display: flex !important;
+/* --- ✅ إصلاح الأيقونات (Theme & Profile) --- */
+/* بنستهدف الأيقونة نفسها جوه الزرار عشان نضمن السنترة من غير ما نبوظ حجم الزرار */
+.app-shell button svg, 
+[class*="ProfileButton"] svg, 
+[class*="ThemeToggle"] svg {
+  display: block;
+  margin: auto !important;
+}
+
+/* التأكد إن حاوية الأيقونات بتوسط اللي جواها صح */
+.app-shell button, 
+[class*="ProfileButton"], 
+[class*="ThemeToggle"] {
+  display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  vertical-align: middle;
 }
 
-/* تظبيط الـ Modals */
+/* منع أي سكرول عرضي ناتج عن الـ Modals */
 [class*="modal"], [role="dialog"] {
-  width: 95% !important;
   max-width: 95vw !important;
   margin: auto !important;
 }
