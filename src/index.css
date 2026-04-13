@@ -53,6 +53,34 @@ html, body {
   /* تظبيط المسافات (Margins) اللي بتبقى كبيرة في الديسكتوب */
   .p-10, .p-20 { padding: 1.5rem !important; }
   .m-10, .m-20 { margin: 1rem !important; }
+
+  /* --- 🛠️ لمسات إضافية بناءً على صور الـ UI --- */
+  
+  /* تظبيط زحمة أزرار الهيدر */
+  .flex-wrap {
+    gap: 0.5rem !important;
+    justify-content: center !important;
+  }
+
+  /* تصغير حجم أزرار الأيقونات في الموبايل عشان متخبطش في بعضها */
+  .h-12.w-12, .h-14.w-14 {
+    height: 2.8rem !important;
+    width: 2.8rem !important;
+    border-radius: 0.75rem !important;
+  }
+
+  /* تظبيط الـ Search Bar عشان مياكلش الشاشة */
+  .relative.group.h-12, .relative.group.h-14 {
+    height: 2.8rem !important;
+    width: 100% !important; /* خليه ياخد العرض كله لو الشاشة ضيقة */
+    max-width: 250px;
+  }
+
+  /* تظبيط المدخلات (Inputs) في الـ Login/Signup */
+  input, select {
+    padding: 0.75rem !important;
+    font-size: 14px !important;
+  }
 }
 
 /* تظبيط الـ Modals (زي ExerciseModal و Chat) لتناسب شاشة الموبايل */
