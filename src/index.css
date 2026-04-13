@@ -4,44 +4,38 @@
   --color-staqemBlue: #2563eb;
 }
 
-/* --- 📱 إعدادات الموبايل (مفصولة تماماً عن الديسكتوب) --- */
-@media (max-width: 768px) {
-  html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
+/* --- 📱 إعدادات الموبايل (من غير بعص في الزراير) --- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* تصغير الزراير والبحث في الموبايل فقط */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  /* تصغير المسافات في الموبايل فقط */
+  .p-10, .p-20 { padding: 1.25rem !important; }
+  .m-10, .m-20 { margin: 1rem !important; }
+  
+  h1 { font-size: 1.5rem !important; }
+
+  /* تظبيط مقاسات حاويات الأيقونات في الموبايل */
   .h-12.w-12, .h-14.w-14 {
     height: 2.75rem !important;
     width: 2.75rem !important;
   }
-
+  
   .relative.group.h-12, .relative.group.h-14 {
     height: 2.75rem !important;
   }
-
-  h1 { font-size: 1.5rem !important; }
-  .p-10, .p-20 { padding: 1.25rem !important; }
-}
-
-/* --- ✅ إصلاح الأيقونات (Theme & Profile) --- */
-/* بنستهدف الأيقونة نفسها جوه الزرار عشان نضمن السنترة من غير ما نبوظ حجم الزرار */
-.app-shell button svg, 
-[class*="ProfileButton"] svg, 
-[class*="ThemeToggle"] svg {
-  display: block;
-  margin: auto !important;
-}
-
-/* التأكد إن حاوية الأيقونات بتوسط اللي جواها صح */
-.app-shell button, 
-[class*="ProfileButton"], 
-[class*="ThemeToggle"] {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  vertical-align: middle;
 }
 
 /* منع أي سكرول عرضي ناتج عن الـ Modals */
@@ -49,3 +43,5 @@
   max-width: 95vw !important;
   margin: auto !important;
 }
+
+/* ❌ شيلنا أي CSS كان بيفرض Flex على الزراير عشان الـ Theme Toggle يرجع يتحرك صح */
