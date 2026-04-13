@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Stethoscope, User, Mail, Lock, Phone, Loader2, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-// استبدلنا axios العادي بملف الـ API بتاعنا عشان يقرأ من Render
 import API from '../api/axios'; 
 import Swal from 'sweetalert2';
 import { useTheme } from '../context/ThemeContext';
@@ -23,7 +22,6 @@ const Signup = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        // استخدمنا الـ API الموحد وشلنا الرابط اليدوي
         const response = await API.get('/users/doctors-list');
         setDoctors(response.data);
       } catch (error) {
@@ -36,7 +34,6 @@ const Signup = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      // الـ API عارف لوحده إنه يكلم Render أو localhost حسب الـ .env
       await API.post('/users/signup', data);
       
       Swal.fire({
@@ -49,8 +46,8 @@ const Signup = () => {
         confirmButtonText: t('let_is_go'),
         confirmButtonColor: '#3b82f6',
         customClass: { 
-          popup: 'rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
-          title: 'font-black text-2xl',
+          popup: 'rounded-[2rem] md:rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
+          title: 'font-black text-xl md:text-2xl',
           confirmButton: 'rounded-2xl px-10 py-3 font-black transition-all hover:scale-105'
         }
       }).then((result) => {
@@ -68,8 +65,8 @@ const Signup = () => {
         confirmButtonText: t('ok_btn'),
         confirmButtonColor: '#3b82f6',
         customClass: { 
-          popup: 'rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
-          title: 'font-black text-2xl',
+          popup: 'rounded-[2rem] md:rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
+          title: 'font-black text-xl md:text-2xl',
           confirmButton: 'rounded-2xl px-10 py-3 font-black transition-all hover:scale-105'
         }
       });
@@ -79,59 +76,60 @@ const Signup = () => {
   };
 
   return (
-    <div className={`relative min-h-screen w-full flex items-center justify-center transition-colors duration-500 font-sans p-4 overflow-hidden 
+    <div className={`relative min-h-screen w-full flex items-center justify-center transition-colors duration-500 font-sans p-3 md:p-4 overflow-x-hidden 
       ${isDarkMode ? 'bg-[#070b14]' : 'bg-slate-50'}`}>
       
-      {/* أزرار التحكم باللغة والثيرم */}
-      <div className={`absolute top-8 ${i18n.language === 'ar' ? 'left-8' : 'right-8'} z-50 flex gap-4 animate-in fade-in duration-700`}>
+      {/* أزرار التحكم - متناسقة مع باقي الصفحات */}
+      <div className={`absolute top-4 md:top-8 ${i18n.language === 'ar' ? 'left-4 md:left-8' : 'right-4 md:right-8'} z-50 flex gap-2 md:gap-4 animate-in fade-in duration-700`}>
         <LanguageToggle />
         <ThemeToggle />
       </div>
 
       {isDarkMode && (
         <>
-          <div className="absolute top-[-5%] right-[-5%] w-150 h-150 bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-[-5%] left-[-5%] w-150 h-150 bg-purple-600/10 rounded-full blur-[120px]" />
+          <div className="absolute top-[-5%] right-[-5%] w-80 md:w-150 h-80 md:h-150 bg-blue-600/10 rounded-full blur-[100px] md:blur-[120px] animate-pulse" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-80 md:w-150 h-80 md:h-150 bg-purple-600/10 rounded-full blur-[100px] md:blur-[120px]" />
         </>
       )}
 
-      <div className={`relative z-10 max-w-xl w-full backdrop-blur-2xl border rounded-[3.5rem] p-8 md:p-12 shadow-2xl transition-all duration-500 animate-in fade-in zoom-in
+      {/* الكارت الأساسي - عرض XL لراحة البيانات الكثيرة */}
+      <div className={`relative z-10 max-w-xl w-full backdrop-blur-2xl border rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-12 shadow-2xl transition-all duration-500 animate-in fade-in zoom-in
         ${isDarkMode 
           ? 'bg-white/3 border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]' 
           : 'bg-white border-slate-200 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]'}`}>
         
-        <div className="text-center mb-10">
-           <div className={`inline-flex p-5 rounded-4xl mb-4 border transition-colors 
+        <div className="text-center mb-6 md:mb-10">
+           <div className={`inline-flex p-4 md:p-5 rounded-3xl md:rounded-4xl mb-4 border transition-colors 
              ${isDarkMode ? 'bg-blue-600/20 border-blue-500/20 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-600'}`}>
-              <h1 className="text-4xl font-black tracking-tighter">{i18n.language === 'ar' ? 'استقم' : 'Staqem'} 🩺</h1>
+              <h1 className="text-3xl md:text-4xl font-black tracking-tighter">{i18n.language === 'ar' ? 'استقم' : 'Staqem'} 🩺</h1>
            </div>
-           <h2 className={`text-2xl font-black mt-2 tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+           <h2 className={`text-xl md:text-2xl font-black mt-2 tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
              {t('signup_title')}
            </h2>
-           <p className={`text-sm font-medium opacity-60 mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+           <p className={`text-xs md:text-sm font-medium opacity-60 mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
              {t('signup_subtitle')}
            </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-5" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
           
           <div className="relative group">
-            <User className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4.5 transition-colors 
-              ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={20} />
+            <User className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4 md:top-4.5 transition-colors 
+              ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={18} />
             <input {...register("full_name", { required: true })} type="text" placeholder={t('full_name_placeholder')} 
-              className={`w-full ${i18n.language === 'ar' ? 'pr-14 pl-6' : 'pl-14 pr-6'} py-4.5 rounded-2xl outline-none transition-all font-bold placeholder:opacity-50
+              className={`w-full ${i18n.language === 'ar' ? 'pr-12 md:pr-14 pl-6' : 'pl-12 md:pl-14 pr-6'} py-4 md:py-4.5 rounded-xl md:rounded-2xl outline-none transition-all font-bold placeholder:opacity-50 text-sm md:text-base
                 ${isDarkMode 
                   ? 'bg-white/5 border border-white/5 text-white focus:ring-2 focus:ring-blue-500/50' 
                   : 'bg-slate-50 border border-slate-100 text-slate-900 focus:ring-2 focus:ring-blue-600/20'}`}
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             <div className="relative group">
-              <Mail className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4.5 transition-colors 
-                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={20} />
+              <Mail className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4 md:top-4.5 transition-colors 
+                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={18} />
               <input {...register("email", { required: true })} type="email" placeholder={t('email_label')} 
-                className={`w-full ${i18n.language === 'ar' ? 'pr-14 pl-6' : 'pl-14 pr-6'} py-4.5 rounded-2xl outline-none transition-all font-bold placeholder:opacity-50
+                className={`w-full ${i18n.language === 'ar' ? 'pr-12 md:pr-14 pl-6' : 'pl-12 md:pl-14 pr-6'} py-4 md:py-4.5 rounded-xl md:rounded-2xl outline-none transition-all font-bold placeholder:opacity-50 text-sm md:text-base
                   ${isDarkMode 
                     ? 'bg-white/5 border border-white/5 text-white focus:ring-2 focus:ring-blue-500/50' 
                     : 'bg-slate-50 border border-slate-100 text-slate-900 focus:ring-2 focus:ring-blue-600/20'}`}
@@ -139,10 +137,10 @@ const Signup = () => {
             </div>
 
             <div className="relative group">
-              <Phone className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4.5 transition-colors 
-                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={20} />
+              <Phone className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4 md:top-4.5 transition-colors 
+                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={18} />
               <input {...register("phone", { required: true })} type="tel" placeholder={t('phone_placeholder')} 
-                className={`w-full ${i18n.language === 'ar' ? 'pr-14 pl-6' : 'pl-14 pr-6'} py-4.5 rounded-2xl outline-none transition-all font-bold placeholder:opacity-50
+                className={`w-full ${i18n.language === 'ar' ? 'pr-12 md:pr-14 pl-6' : 'pl-12 md:pl-14 pr-6'} py-4 md:py-4.5 rounded-xl md:rounded-2xl outline-none transition-all font-bold placeholder:opacity-50 text-sm md:text-base
                   ${isDarkMode 
                     ? 'bg-white/5 border border-white/5 text-white focus:ring-2 focus:ring-blue-500/50' 
                     : 'bg-slate-50 border border-slate-100 text-slate-900 focus:ring-2 focus:ring-blue-600/20'}`}
@@ -150,16 +148,16 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className={`flex gap-2 p-2 rounded-2xl transition-colors border ${isDarkMode ? 'bg-black/20 border-white/5' : 'bg-slate-100 border-slate-200'}`}>
+          <div className={`flex gap-2 p-1.5 md:p-2 rounded-xl md:rounded-2xl transition-colors border ${isDarkMode ? 'bg-black/20 border-white/5' : 'bg-slate-100 border-slate-200'}`}>
             <label className="flex-1 cursor-pointer">
               <input {...register("role")} type="radio" value="patient" className="hidden peer" defaultChecked />
-              <div className={`text-center py-3 rounded-xl transition-all font-black text-xs uppercase tracking-[0.2em]
+              <div className={`text-center py-2.5 md:py-3 rounded-lg md:rounded-xl transition-all font-black text-[10px] md:text-xs uppercase tracking-widest md:tracking-[0.2em]
                 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-blue-500/20
                 ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}>{t('patient')}</div>
             </label>
             <label className="flex-1 cursor-pointer">
               <input {...register("role")} type="radio" value="doctor" className="hidden peer" />
-              <div className={`text-center py-3 rounded-xl transition-all font-black text-xs uppercase tracking-[0.2em]
+              <div className={`text-center py-2.5 md:py-3 rounded-lg md:rounded-xl transition-all font-black text-[10px] md:text-xs uppercase tracking-widest md:tracking-[0.2em]
                 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-blue-500/20
                 ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}>{t('doctor')}</div>
             </label>
@@ -167,11 +165,11 @@ const Signup = () => {
 
           {selectedRole === "patient" && (
             <div className="relative group animate-in slide-in-from-top-2 duration-300">
-              <Stethoscope className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4.5 transition-colors 
-                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={20} />
+              <Stethoscope className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4 md:top-4.5 transition-colors 
+                ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={18} />
               <select
                 {...register("doctor_id", { required: selectedRole === "patient" })}
-                className={`w-full ${i18n.language === 'ar' ? 'pr-14 pl-8' : 'pl-14 pr-8'} py-4.5 rounded-2xl outline-none appearance-none transition-all font-bold
+                className={`w-full ${i18n.language === 'ar' ? 'pr-12 md:pr-14 pl-8' : 'pl-12 md:pl-14 pr-8'} py-4 md:py-4.5 rounded-xl md:rounded-2xl outline-none appearance-none transition-all font-bold text-sm md:text-base
                   ${isDarkMode 
                     ? 'bg-white/5 border border-white/5 text-white focus:ring-2 focus:ring-blue-500/50' 
                     : 'bg-slate-50 border border-slate-100 text-slate-900 focus:ring-2 focus:ring-blue-600/20'}`}
@@ -187,10 +185,10 @@ const Signup = () => {
           )}
 
           <div className="relative group">
-            <Lock className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4.5 transition-colors 
-              ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={20} />
+            <Lock className={`absolute ${i18n.language === 'ar' ? 'right-5' : 'left-5'} top-4 md:top-4.5 transition-colors 
+              ${isDarkMode ? 'text-slate-500 group-focus-within:text-blue-400' : 'text-slate-400 group-focus-within:text-blue-600'}`} size={18} />
             <input {...register("password", { required: true, minLength: 6 })} type="password" placeholder={t('password_placeholder')} 
-              className={`w-full ${i18n.language === 'ar' ? 'pr-14 pl-6' : 'pl-14 pr-6'} py-4.5 rounded-2xl outline-none transition-all font-bold placeholder:opacity-50
+              className={`w-full ${i18n.language === 'ar' ? 'pr-12 md:pr-14 pl-6' : 'pl-12 md:pl-14 pr-6'} py-4 md:py-4.5 rounded-xl md:rounded-2xl outline-none transition-all font-bold placeholder:opacity-50 text-sm md:text-base
                 ${isDarkMode 
                   ? 'bg-white/5 border border-white/5 text-white focus:ring-2 focus:ring-blue-500/50' 
                   : 'bg-slate-50 border border-slate-100 text-slate-900 focus:ring-2 focus:ring-blue-600/20'}`}
@@ -198,16 +196,16 @@ const Signup = () => {
           </div>
 
           <button type="submit" disabled={loading} 
-            className={`w-full py-5 rounded-4xl font-black text-xl transition-all active:scale-95 flex items-center justify-center gap-3 mt-6 shadow-2xl
+            className={`w-full py-4 md:py-5 rounded-3xl md:rounded-4xl font-black text-lg md:text-xl transition-all active:scale-95 flex items-center justify-center gap-3 mt-4 md:mt-6 shadow-2xl
               ${isDarkMode 
                 ? 'bg-blue-600 text-white hover:bg-blue-500 shadow-blue-900/20' 
                 : 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-100'}`}>
-            {loading ? <Loader2 className="animate-spin" size={24} /> : <><Sparkles size={22} /> {t('signup_btn')}</>}
+            {loading ? <Loader2 className="animate-spin" size={24} /> : <><Sparkles size={20} className="md:w-5.5" /> {t('signup_btn')}</>}
           </button>
         </form>
 
-        <div className={`mt-10 pt-8 border-t text-center ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
-          <p className={`${isDarkMode ? 'text-slate-500' : 'text-slate-400'} text-sm font-bold`}>
+        <div className={`mt-8 md:mt-10 pt-6 md:pt-8 border-t text-center ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
+          <p className={`${isDarkMode ? 'text-slate-500' : 'text-slate-400'} text-xs md:text-sm font-bold`}>
             {t('already_have_account')}
             <span onClick={() => navigate("/login")} 
               className={`font-black ${i18n.language === 'ar' ? 'mr-2' : 'ml-2'} cursor-pointer text-blue-500 hover:underline underline-offset-8 transition-all`}>
