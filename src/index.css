@@ -3,3 +3,61 @@
 @theme {
   --color-staqemBlue: #2563eb;
 }
+
+/* --- 📱 إعدادات الـ Mobile View العالمية --- */
+
+/* منع السكرول العرضي تماماً وضمان تناسق الأبعاد */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* تظبيط الحاوية اللي ضفناها في App.jsx */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* قواعد ذكية للموبايل (Media Queries) */
+@media (max-width: 768px) {
+  /* تظبيط الحاويات عشان متبقاش مخنوقة في الموبايل */
+  .container, [class*="container"] {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin: 0 auto !important;
+  }
+
+  /* تصغير الخطوط الكبيرة أوتوماتيك عشان م تكسرش السطور */
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  
+  /* تظبيط الصور والجيفات عشان متخرجش بره الشاشة */
+  img, video, canvas, gif {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* لو عندك جداول، بتخليها قابلة للسحب يمين وشمال بدل ما تبوظ العرض */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* تظبيط المسافات (Margins) اللي بتبقى كبيرة في الديسكتوب */
+  .p-10, .p-20 { padding: 1.5rem !important; }
+  .m-10, .m-20 { margin: 1rem !important; }
+}
+
+/* تظبيط الـ Modals (زي ExerciseModal و Chat) لتناسب شاشة الموبايل */
+[class*="modal"], [role="dialog"] {
+  width: 95% !important;
+  max-width: 95vw !important;
+  margin: auto !important;
+}

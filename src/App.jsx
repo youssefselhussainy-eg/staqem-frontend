@@ -1,7 +1,7 @@
-import { useEffect } from 'react'; // أضفنا useEffect
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // أضفنا Hook الترجمة
-import './i18n'; // استيراد ملف الإعدادات (اللي هتعمله)
+import { useTranslation } from 'react-i18next';
+import './i18n';
 
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -14,7 +14,6 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import ReAssessment from './pages/Assessment/ReAssessment';
 import { SocketProvider } from './context/SocketContext'; 
 
-// --- 🛡️ حارس المسارات (ProtectedRoute) ---
 const ProtectedRoute = ({ children, allowedRole }) => {
   const token = localStorage.getItem('access_token');
   const role = localStorage.getItem('user_role');
@@ -31,7 +30,6 @@ const ProtectedRoute = ({ children, allowedRole }) => {
 function App() {
   const { i18n } = useTranslation();
 
-  // --- 💡 مراقب اللغة الذكي: يغير اتجاه التطبيق بالكامل فور تغيير اللغة ---
   useEffect(() => {
     const currentLang = i18n.language || 'ar';
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
@@ -41,52 +39,52 @@ function App() {
   return (
     <Router>
       <SocketProvider>
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          
-          {/* --- 🧘‍♂️ مسارات المريض --- */}
-          <Route path="/patient-dashboard" element={
-            <ProtectedRoute allowedRole="patient">
-              <PatientDashboard />
-            </ProtectedRoute>
-          } />
+        {/* أضفنا هذا الـ div ليغلف التطبيق بالكامل للتحكم في Responsive Layout */}
+        <div className="app-shell">
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            
+            <Route path="/patient-dashboard" element={
+              <ProtectedRoute allowedRole="patient">
+                <PatientDashboard />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/my-exercises" element={
-            <ProtectedRoute allowedRole="patient">
-              <MyExercises />
-            </ProtectedRoute>
-          } />
+            <Route path="/my-exercises" element={
+              <ProtectedRoute allowedRole="patient">
+                <MyExercises />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/re-assessment" element={
-            <ProtectedRoute allowedRole="patient">
-              <ReAssessment />
-            </ProtectedRoute>
-          } />
+            <Route path="/re-assessment" element={
+              <ProtectedRoute allowedRole="patient">
+                <ReAssessment />
+              </ProtectedRoute>
+            } />
 
-          {/* --- 🩺 مسارات الدكتور --- */}
-          <Route path="/doctor-dashboard" element={
-            <ProtectedRoute allowedRole="doctor">
-              <DoctorDashboard />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/doctor/patient/:email" element={
-            <ProtectedRoute allowedRole="doctor">
-              <PatientDetails />
-            </ProtectedRoute>
-          } />
+            <Route path="/doctor-dashboard" element={
+              <ProtectedRoute allowedRole="doctor">
+                <DoctorDashboard />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/doctor/patient/:email" element={
+              <ProtectedRoute allowedRole="doctor">
+                <PatientDetails />
+              </ProtectedRoute>
+            } />
 
-          {/* --- 👤 الملف الشخصي --- */}
-          <Route path="/profile" element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/" element={<Navigate to="/login" />} />
-        </Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+          </Routes>
+        </div>
       </SocketProvider>
     </Router>
   );
