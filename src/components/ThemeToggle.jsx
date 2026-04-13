@@ -9,17 +9,18 @@ const ThemeToggle = () => {
     <button
       onClick={() => setIsDarkMode(!isDarkMode)}
       dir="ltr"
-      // w-16 للموبايل و w-20 للديسكتوب - الارتفاع h-12 و h-14 مطابق للبروفايل
-      className={`relative w-16 h-12 md:w-20 md:h-14 flex items-center rounded-xl md:rounded-2xl p-1 transition-all duration-500 shadow-inner shrink-0 border
+      // التعديل: وسّعنا العرض (w-20 للموبايل و w-24 للديسكتوب) عشان يبان إنه Toggle مش مربع
+      // وحافظنا على الارتفاع (h-12 و h-14) عشان يطابق البروفايل
+      className={`relative w-20 h-12 md:w-24 md:h-14 flex items-center rounded-xl md:rounded-2xl p-1.5 transition-all duration-500 shadow-inner shrink-0 border
         ${isDarkMode 
           ? 'bg-slate-800 border-white/10' 
           : 'bg-slate-100 border-slate-200'}`}
     >
-      {/* الدائرة المتحركة - المقاس محسوب بالملي لضمان السنترة الطولية */}
+      {/* الدائرة المتحركة - صغرنا حجمها (w-8 للموبايل و w-10 للديسكتوب) عشان تبان "دائرة" مش "بلوك" */}
       <div
-        className={`absolute top-1 left-1 w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl shadow-md transform transition-transform duration-500 flex items-center justify-center
+        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl shadow-md transform transition-transform duration-500 flex items-center justify-center
           ${isDarkMode 
-            ? 'translate-x-4 md:translate-x-6 bg-slate-900 text-blue-400' 
+            ? 'translate-x-9 md:translate-x-11 bg-slate-900 text-blue-400' 
             : 'translate-x-0 bg-white text-amber-500'}`}
       >
         {isDarkMode ? (
@@ -29,10 +30,10 @@ const ThemeToggle = () => {
         )}
       </div>
       
-      {/* أيقونات الخلفية الهادية - px-2.5 تضمن إنهم ورا الدائرة بالظبط */}
-      <div className="flex justify-between items-center w-full px-2.5 md:px-3.5 opacity-20 pointer-events-none">
-        <Sun size={12} className={`md:w-4 ${isDarkMode ? 'text-white' : 'text-slate-400'}`} />
-        <Moon size={12} className={`md:w-4 ${isDarkMode ? 'text-white' : 'text-slate-400'}`} />
+      {/* أيقونات الخلفية الهادية - متوزعة بانتظام */}
+      <div className="absolute inset-0 flex justify-between items-center px-3 md:px-4 pointer-events-none opacity-20">
+        <Sun size={14} className={isDarkMode ? 'text-white' : 'text-slate-400'} />
+        <Moon size={14} className={isDarkMode ? 'text-white' : 'text-slate-400'} />
       </div>
     </button>
   );
