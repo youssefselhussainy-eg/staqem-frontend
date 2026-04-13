@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// استبدلنا axios العادي بملف الـ API الموحد
 import API from '../../api/axios'; 
 import { 
   ArrowRight, Activity, Calendar, Plus, User, 
@@ -34,7 +33,6 @@ const PatientDetails = () => {
   const fetchDetail = useCallback(async () => {
     try {
       setLoading(true);
-      // الـ API عارف لوحده يروح لـ Render أو localhost
       const res = await API.get(`/doctors/patient-detail/${email}`);
       setData(res.data);
       const logsRes = await API.get(`/users/exercise-logs/${email}`);
@@ -62,7 +60,7 @@ const PatientDetails = () => {
         confirmButtonColor: '#3b82f6',
         background: isDarkMode ? '#0f172a' : '#fff',
         color: isDarkMode ? '#fff' : '#1e293b',
-        customClass: { popup: 'rounded-[3rem] border border-white/10' }
+        customClass: { popup: 'rounded-[2rem] md:rounded-[3rem] border border-white/10' }
       });
     } catch { 
       Swal.fire(t('error'), t('request_failed'), 'error');
@@ -90,7 +88,7 @@ const PatientDetails = () => {
         confirmButtonText: t('excellent'),
         confirmButtonColor: '#3b82f6',
         customClass: { 
-          popup: 'rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
+          popup: 'rounded-[2rem] md:rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
           title: 'font-black text-2xl',
           confirmButton: 'rounded-2xl px-10 py-3 font-black transition-all hover:scale-105'
         }
@@ -103,7 +101,7 @@ const PatientDetails = () => {
          background: isDarkMode ? '#0f172a' : '#fff',
          color: isDarkMode ? '#fff' : '#1e293b',
          confirmButtonColor: '#ef4444',
-         customClass: { popup: 'rounded-[2.5rem]' }
+         customClass: { popup: 'rounded-[2rem]' }
        });
     }
   };
@@ -119,7 +117,7 @@ const PatientDetails = () => {
     <div className={`flex flex-col items-center justify-center h-screen space-y-6 transition-colors duration-500
       ${isDarkMode ? 'bg-[#070b14] text-blue-400' : 'bg-slate-50 text-blue-600'}`}>
       <div className="w-16 h-16 border-4 border-current border-t-transparent rounded-full animate-spin"></div>
-      <p className="font-black tracking-widest uppercase text-sm">{t('syncing_patient_file')}</p>
+      <p className="font-black tracking-widest uppercase text-xs md:text-sm">{t('syncing_patient_file')}</p>
     </div>
   );
 
@@ -133,104 +131,104 @@ const PatientDetails = () => {
       
       {isDarkMode && (
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] right-[-5%] w-150 h-150 bg-blue-600/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-5%] w-120 h-120 bg-purple-600/5 rounded-full blur-[100px]" />
+          <div className="absolute top-[-10%] right-[-5%] w-80 md:w-150 h-80 md:h-150 bg-blue-600/5 rounded-full blur-[100px] md:blur-[120px]" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-72 md:w-120 h-72 md:h-120 bg-purple-600/5 rounded-full blur-[80px] md:blur-[100px]" />
         </div>
       )}
 
-      <div className="max-w-360 mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Navigation */}
-        <button onClick={() => navigate(-1)} className={`flex items-center gap-2 mb-10 font-black group transition-all text-xs uppercase tracking-widest
+        <button onClick={() => navigate(-1)} className={`flex items-center gap-2 mb-6 md:mb-10 font-black group transition-all text-[10px] md:text-xs uppercase tracking-widest
           ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}>
-          <ArrowRight size={18} className={`group-hover:translate-x-1 transition-transform ${i18n.language === 'en' ? 'rotate-180' : ''}`} /> 
+          <ArrowRight size={16} className={`group-hover:translate-x-1 transition-transform ${i18n.language === 'en' ? 'rotate-180' : ''}`} /> 
           {t('back_to_dashboard')}
         </button>
 
         {/* Patient Header Card */}
-        <div className={`p-10 rounded-[3.5rem] border backdrop-blur-xl mb-10 flex flex-col md:flex-row justify-between items-center gap-10 transition-all duration-500
+        <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-xl mb-6 md:mb-10 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10 transition-all duration-500
           ${isDarkMode ? 'bg-white/3 border-white/5 shadow-2xl' : 'bg-white border-slate-100 shadow-sm'}`}>
           
-          <div className={`flex items-center gap-8 text-right w-full ${i18n.language === 'en' ? 'flex-row-reverse' : ''}`}>
-            <div className={`w-32 h-32 rounded-[2.5rem] flex items-center justify-center transition-all shadow-2xl shrink-0
+          <div className={`flex flex-col md:flex-row items-center gap-6 md:gap-8 w-full ${i18n.language === 'en' ? 'md:flex-row-reverse' : ''}`}>
+            <div className={`w-24 h-24 md:w-32 md:h-32 rounded-4xl md:rounded-[2.5rem] flex items-center justify-center transition-all shadow-2xl shrink-0
               ${isDarkMode ? 'bg-blue-600/20 border border-blue-500/20 text-blue-400' : 'bg-blue-600 text-white'}`}>
-              <User size={64} />
+              <User size={48} className="md:w-16 md:h-16" />
             </div>
-            <div className={`flex-1 ${i18n.language === 'en' ? 'text-left' : 'text-right'}`}>
-              <div className={`flex items-center gap-4 ${i18n.language === 'en' ? 'flex-row-reverse' : ''}`}>
-                <h1 className={`text-4xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{patient.full_name}</h1>
+            <div className={`flex-1 text-center ${i18n.language === 'en' ? 'md:text-left' : 'md:text-right'}`}>
+              <div className={`flex flex-col md:flex-row items-center gap-3 md:gap-4 ${i18n.language === 'en' ? 'md:flex-row-reverse' : ''}`}>
+                <h1 className={`text-2xl md:text-4xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{patient.full_name}</h1>
                 <button 
                   onClick={() => setIsChatOpen(true)}
-                  className={`p-3 rounded-2xl transition-all active:scale-90 flex items-center gap-2 font-black text-xs
+                  className={`w-full md:w-auto px-4 py-2.5 rounded-xl md:rounded-2xl transition-all active:scale-90 flex items-center justify-center gap-2 font-black text-[10px] md:text-xs
                     ${isDarkMode ? 'bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white' : 'bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white'}`}
                 >
-                  <MessageSquare size={18} /> {t('message_patient')}
+                  <MessageSquare size={16} /> {t('message_patient')}
                 </button>
               </div>
-              <p className={`text-sm font-bold mt-1 opacity-50 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{patient.email}</p>
-              <div className={`inline-flex items-center gap-3 mt-6 px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border transition-colors
+              <p className={`text-xs md:sm font-bold mt-1 opacity-50 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{patient.email}</p>
+              <div className={`inline-flex items-center gap-3 mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-2.5 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] border transition-colors
                 ${severity.bg} ${severity.color} ${severity.border}`}>
-                <Activity size={16} /> {severity.text}
+                <Activity size={14} className="md:w-4 md:h-4" /> {severity.text}
               </div>
             </div>
           </div>
 
-          <div className={`p-10 rounded-[2.5rem] border text-center min-w-60 transition-all shadow-inner
+          <div className={`p-6 md:p-10 rounded-3xl md:rounded-[2.5rem] border text-center w-full md:min-w-60 transition-all shadow-inner
             ${isDarkMode ? 'bg-black/20 border-white/5' : 'bg-blue-50/50 border-blue-100'}`}>
-            <p className={`text-[10px] uppercase font-black tracking-[0.4em] mb-3 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}>
+            <p className={`text-[9px] md:text-[10px] uppercase font-black tracking-[0.3em] md:tracking-[0.4em] mb-2 md:mb-3 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}>
               {t('ndi_latest_label')}
             </p>
-            <div className={`text-7xl font-black ${isDarkMode ? 'text-white' : 'text-blue-600'}`}>
-              {latestAssessment?.total_score || '--'}<span className="text-3xl opacity-20 mr-2">/50</span>
+            <div className={`text-5xl md:text-7xl font-black ${isDarkMode ? 'text-white' : 'text-blue-600'}`}>
+              {latestAssessment?.total_score || '--'}<span className="text-2xl md:text-3xl opacity-20 mr-2">/50</span>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-8 space-y-8">
-            <div className={`p-10 rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
+          <div className="lg:col-span-8 space-y-6 md:space-y-8">
+            <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500
               ${isDarkMode ? 'bg-white/3 border-white/5 shadow-2xl' : 'bg-white border-slate-100 shadow-sm'}`}>
-              <h3 className={`font-black text-2xl mb-10 flex items-center gap-4 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                <div className="p-3.5 rounded-2xl bg-green-500/10 text-green-500 border border-green-500/20 shadow-inner">
-                  <CheckCircle2 size={28} />
+              <h3 className={`font-black text-xl md:text-2xl mb-6 md:mb-10 flex items-center gap-3 md:gap-4 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                <div className="p-3 rounded-xl md:p-3.5 md:rounded-2xl bg-green-500/10 text-green-500 border border-green-500/20 shadow-inner">
+                  <CheckCircle2 size={24} className="md:w-7 md:h-7" />
                 </div>
                 {t('daily_compliance_tracking')}
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 {current_plan?.length > 0 ? current_plan.map((ex) => (
-                  <div key={ex.id} className={`p-6 rounded-4xl border transition-all flex items-center justify-between group
+                  <div key={ex.id} className={`p-4 md:p-6 rounded-2xl md:rounded-4xl border transition-all flex items-center justify-between group
                     ${ex.is_completed 
                       ? (isDarkMode ? 'bg-green-500/5 border-green-500/20' : 'bg-green-50 border-green-100') 
                       : (isDarkMode ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-100')}`}>
-                    <div className={`flex items-center gap-5 ${i18n.language === 'en' ? 'flex-row-reverse' : ''}`}>
-                      <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-md">
+                    <div className={`flex items-center gap-3 md:gap-5 ${i18n.language === 'en' ? 'flex-row-reverse' : ''}`}>
+                      <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl overflow-hidden shadow-md shrink-0">
                          <img src={ex.image_url} className={`w-full h-full object-cover transition-all ${ex.is_completed ? '' : 'grayscale opacity-40'}`} alt="" />
                       </div>
                       <div className={i18n.language === 'en' ? 'text-left' : 'text-right'}>
-                        <p className={`font-black text-base ${ex.is_completed ? 'text-green-500' : (isDarkMode ? 'text-slate-200' : 'text-slate-700')}`}>{ex.title}</p>
-                        <p className={`text-[10px] font-black mt-1.5 flex items-center gap-1.5 uppercase tracking-wider ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                           <Clock size={12}/> {ex.reps_sets}
+                        <p className={`font-black text-sm md:text-base ${ex.is_completed ? 'text-green-500' : (isDarkMode ? 'text-slate-200' : 'text-slate-700')}`}>{ex.title}</p>
+                        <p className={`text-[9px] md:text-[10px] font-black mt-1 flex items-center gap-1 uppercase tracking-wider ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                            <Clock size={10}/> {ex.reps_sets}
                         </p>
                       </div>
                     </div>
-                    {ex.is_completed ? <CheckCircle2 className="text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]" size={28} /> : <Circle className="text-slate-700 opacity-10" size={28} />}
+                    {ex.is_completed ? <CheckCircle2 className="text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.3)] shrink-0" size={24} /> : <Circle className="text-slate-700 opacity-10 shrink-0" size={24} />}
                   </div>
-                )) : <div className="col-span-full py-12 text-center opacity-30 italic font-bold">{t('no_assigned_exercises')}</div>}
+                )) : <div className="col-span-full py-10 md:py-12 text-center opacity-30 italic font-bold">{t('no_assigned_exercises')}</div>}
               </div>
             </div>
 
-            <div className={`p-10 rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500
+            <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500
               ${isDarkMode ? 'bg-white/3 border-white/5 shadow-2xl' : 'bg-white border-slate-100'}`}>
-              <div className="flex justify-between items-center mb-12">
-                <h3 className={`font-black text-2xl flex items-center gap-4 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                  <div className="p-3.5 rounded-2xl bg-blue-500/10 text-blue-500 border border-blue-500/20 shadow-inner">
-                    <TrendingUp size={28} />
+              <div className="flex justify-between items-center mb-8 md:mb-12">
+                <h3 className={`font-black text-xl md:text-2xl flex items-center gap-3 md:gap-4 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                  <div className="p-3 rounded-xl md:p-3.5 md:rounded-2xl bg-blue-500/10 text-blue-500 border border-blue-500/20 shadow-inner">
+                    <TrendingUp size={24} className="md:w-7 md:h-7" />
                   </div>
                   {t('ndi_improvement_indicator')}
                 </h3>
               </div>
-              <div className="h-96 w-full" dir="ltr">
+              <div className="h-64 md:h-96 w-full" dir="ltr">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={history.map(h => ({ 
                     date: new Date(h.created_at).toLocaleDateString(i18n.language === 'ar' ? 'ar-EG' : 'en-US', {day: 'numeric', month: 'short'}), 
@@ -243,76 +241,77 @@ const PatientDetails = () => {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? "#ffffff05" : "#f1f5f9"} />
-                    <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 11, fontWeight: '900'}} dy={15} />
-                    <YAxis domain={[0, 50]} axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 11, fontWeight: '900'}} />
+                    <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 10, fontWeight: '900'}} dy={10} />
+                    <YAxis domain={[0, 50]} axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 10, fontWeight: '900'}} />
                     <Tooltip 
                       contentStyle={{ 
-                        borderRadius: '2rem', 
+                        borderRadius: '1.5rem', 
                         backgroundColor: isDarkMode ? '#1e293b' : '#fff',
                         border: isDarkMode ? '1px solid #ffffff10' : 'none',
                         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
-                        padding: '1.5rem'
+                        padding: '1rem'
                       }} 
                     />
-                    <Area type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={5} fillOpacity={1} fill="url(#colorScore)" />
+                    <Area type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={4} fillOpacity={1} fill="url(#colorScore)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-4 space-y-8">
-            <div className={`p-10 rounded-[3.5rem] border transition-all duration-700 relative overflow-hidden group shadow-2xl
+          <div className="lg:col-span-4 space-y-6 md:space-y-8">
+            <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border transition-all duration-700 relative overflow-hidden group shadow-2xl
               ${isDarkMode ? 'bg-blue-600/10 border-blue-500/20' : 'bg-linear-to-br from-blue-600 to-indigo-800 border-transparent shadow-blue-200'}`}>
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-15 transition-opacity duration-1000 rotate-12">
-                 <Sparkles size={220} />
+                 <Sparkles size={180} className="md:w-55 md:h-55" />
               </div>
               <div className="relative z-10">
-                <h3 className="font-black text-3xl text-white mb-6 flex items-center gap-3">
-                  {t('plan_management')} <Sparkles size={28} className="text-blue-300 animate-pulse" />
+                <h3 className="font-black text-2xl md:text-3xl text-white mb-4 md:mb-6 flex items-center gap-3">
+                  {t('plan_management')} <Sparkles size={24} className="text-blue-300 animate-pulse md:w-7 md:h-7" />
                 </h3>
-                <p className={`text-blue-100/80 text-base mb-10 leading-relaxed font-bold ${i18n.language === 'en' ? 'text-left' : 'text-right'}`}>
+                <p className={`text-blue-100/80 text-sm md:text-base mb-8 md:mb-10 leading-relaxed font-bold ${i18n.language === 'en' ? 'text-left' : 'text-right'}`}>
                   {t('plan_management_desc')}
                 </p>
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <button 
                     onClick={() => setIsModalOpen(true)}
-                    className="w-full py-6 bg-white text-blue-600 rounded-4xl font-black text-xl flex items-center justify-center gap-3 hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:-translate-y-1.5 transition-all active:scale-95"
+                    className="w-full py-4 md:py-6 bg-white text-blue-600 rounded-3xl md:rounded-4xl font-black text-lg md:text-xl flex items-center justify-center gap-2 md:gap-3 hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all active:scale-95"
                   >
-                    <Plus size={32} /> {t('edit_program')}
+                    <Plus size={24} className="md:w-8 md:h-8" /> {t('edit_program')}
                   </button>
 
                   <button 
                     onClick={handleRequestAssessment}
                     disabled={requesting}
-                    className={`w-full py-5 rounded-4xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 border-2
+                    className={`w-full py-4 rounded-3xl md:rounded-4xl font-black text-base md:text-lg flex items-center justify-center gap-2 md:gap-3 transition-all active:scale-95 border-2
                       ${isDarkMode 
                         ? 'bg-transparent border-blue-400 text-blue-400 hover:bg-blue-400/10' 
-                        : 'bg-blue-700/50 border-white/20 text-white hover:bg-blue-700 shadow-lg'}`}
+                        : 'bg-blue-700/40 border-white/20 text-white hover:bg-blue-700 shadow-lg'}`}
                   >
-                    {requesting ? <Loader2 className="animate-spin" size={24} /> : <FileText size={24} />}
+                    {requesting ? <Loader2 className="animate-spin" size={20} /> : <FileText size={20} />}
                     {t('request_ndi_reassessment')}
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className={`p-10 rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500 shadow-xl
+            <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500 shadow-xl
               ${isDarkMode ? 'bg-white/3 border-white/5 shadow-black/20' : 'bg-white border-slate-100'}`}>
-              <h3 className={`font-black text-xl mb-10 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                <History className="text-blue-500" size={24} /> {t('historical_logs')}
+              <h3 className={`font-black text-lg md:text-xl mb-6 md:mb-10 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                {/* ✅ السطر الملعون الذي تم إصلاحه هنا */}
+                <History className="text-blue-500 md:w-6 md:h-6" size={20} /> {t('historical_logs')}
               </h3>
-              <div className="space-y-5">
+              <div className="space-y-4 md:space-y-5">
                 {logs.length > 0 ? logs.map((log, idx) => (
-                  <div key={idx} className={`flex items-center justify-between p-6 rounded-3xl border transition-all
+                  <div key={idx} className={`flex items-center justify-between p-4 md:p-6 rounded-2xl md:rounded-3xl border transition-all
                     ${isDarkMode ? 'bg-white/5 border-white/5 hover:bg-white/10' : 'bg-slate-50 border-slate-100 hover:shadow-md hover:bg-white'}`}>
                     <div className={i18n.language === 'en' ? 'text-left' : 'text-right'}>
-                      <p className={`text-sm font-black ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+                      <p className={`text-xs md:text-sm font-black ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
                         {new Date(log.date).toLocaleDateString(i18n.language === 'ar' ? 'ar-EG' : 'en-US', { day: 'numeric', month: 'long' })}
                       </p>
-                      <p className="text-[10px] text-slate-500 font-black mt-1 uppercase tracking-tighter opacity-50">{t('physical_activity')}</p>
+                      <p className="text-[9px] text-slate-500 font-black mt-1 uppercase tracking-tighter opacity-50">{t('physical_activity')}</p>
                     </div>
-                    <span className="text-[11px] font-black text-blue-500 bg-blue-500/10 px-5 py-2.5 rounded-2xl border border-blue-500/10 shadow-sm">
+                    <span className="text-[10px] md:text-[11px] font-black text-blue-500 bg-blue-500/10 px-4 md:px-5 py-2 md:py-2.5 rounded-xl md:rounded-2xl border border-blue-500/10 shadow-sm">
                       {log.count} {t('exercises_count')}
                     </span>
                   </div>
@@ -339,7 +338,7 @@ const PatientDetails = () => {
         receiverName={patient.full_name}
       />
 
-      <p className={`mt-20 text-center text-[10px] font-black uppercase tracking-[0.7em] opacity-20 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+      <p className={`mt-12 md:mt-20 text-center text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.7em] opacity-20 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
         Patient Analytics Module • Staqem Clinical Network
       </p>
     </div>
