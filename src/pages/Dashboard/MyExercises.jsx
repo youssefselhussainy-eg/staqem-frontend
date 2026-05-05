@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../api/axios'; 
-import { CheckCircle, Clock, ArrowRight, PartyPopper, Play, X, Zap, Dumbbell, Trophy } from 'lucide-react';
+import { CheckCircle, Clock, ArrowRight, PartyPopper, Play, X, Zap, Dumbbell, Trophy, ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ExerciseMonitor from '../../components/ExerciseMonitor'; 
@@ -18,6 +18,7 @@ const MyExercises = () => {
   
   const userEmail = localStorage.getItem('user_email');
   const userName = localStorage.getItem('user_name') || 'Staqem Hero';
+  const userRole = localStorage.getItem('user_role');
 
   useEffect(() => {
     const fetchMyExercises = async () => {
@@ -33,6 +34,14 @@ const MyExercises = () => {
     };
     if (userEmail) fetchMyExercises();
   }, [userEmail]);
+
+  const handleBackNavigation = () => {
+    if (userRole === 'doctor') {
+      navigate('/doctor-dashboard');
+    } else {
+      navigate('/patient-dashboard');
+    }
+  };
 
   const handleComplete = async (exId, isAlreadyDone) => {
     if (isAlreadyDone) return;
@@ -99,18 +108,24 @@ const MyExercises = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         
+        {/* ✅ العودة للرئيسية - التعديل الجديد */}
+        <div className={`flex ${i18n.language === 'ar' ? 'justify-start' : 'justify-end'} mb-4 px-2`}>
+            <button 
+              onClick={handleBackNavigation}
+              className={`flex items-center gap-2 text-[10px] md:text-[11px] font-bold transition-all hover:gap-3
+                ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}
+            >
+              {i18n.language === 'ar' && <ChevronLeft size={14} className="rotate-180" />}
+              {t('back_to_dashboard')}
+              {i18n.language === 'en' && <ChevronLeft size={14} className="rotate-180" />}
+            </button>
+        </div>
+
         {/* Navigation & Header Section */}
         <div className={`mb-6 md:mb-10 p-5 md:p-8 rounded-4xl md:rounded-[3rem] border backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-500
           ${isDarkMode ? 'bg-white/3 border-white/5 shadow-2xl' : 'bg-white border-slate-100 shadow-sm'}`}>
           
           <div className={`w-full md:w-auto ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
-            <button 
-              onClick={() => navigate('/patient-dashboard')} 
-              className={`flex items-center gap-2 mb-3 md:mb-4 transition-all font-bold group text-[10px] md:text-sm
-                ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}>
-              <ArrowRight size={16} className={`transition-transform ${i18n.language === 'en' ? 'rotate-180 md:group-hover:-translate-x-1' : 'md:group-hover:translate-x-1'}`} /> 
-              {t('back_to_home')}
-            </button>
             <h1 className={`text-2xl md:text-4xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
               {t('my_daily_exercises')} 🧘‍♀️✨
             </h1>
@@ -151,7 +166,6 @@ const MyExercises = () => {
                 />
                 {ex.is_completed && (
                   <div className="absolute inset-0 bg-green-600/40 flex items-center justify-center backdrop-blur-[2px]">
-                    {/* ✅ الإصلاح هنا: دمج الـ classNames وتجنب التكرار */}
                     <CheckCircle className="text-white drop-shadow-lg md:w-14 md:h-14" size={48} />
                   </div>
                 )}
@@ -209,7 +223,7 @@ const MyExercises = () => {
         {exercises.length > 0 && exercises.every(ex => ex.is_completed) && (
           <div className="p-10 md:p-16 bg-linear-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-[2.5rem] md:rounded-[4rem] text-white text-center shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-1000">
             <div className={`absolute top-0 ${i18n.language === 'ar' ? 'right-0' : 'left-0'} p-4 md:p-8 opacity-10 rotate-12`}>
-                <Trophy size={140} className="md:w-55 md:h-55" />
+                <Trophy size={140} className="md:w-56 md:h-56" />
             </div>
             <PartyPopper size={48} className="mx-auto mb-6 md:mb-8 text-blue-200 animate-bounce md:w-20 md:h-20" />
             <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">

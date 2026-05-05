@@ -4,7 +4,7 @@ import API from '../../api/axios';
 import { 
   ArrowRight, Activity, Calendar, Plus, User, 
   CheckCircle2, Circle, Clock, History, Sparkles, TrendingUp,
-  MessageSquare, FileText, Loader2 
+  MessageSquare, FileText, Loader2, ChevronLeft // تم إضافة ChevronLeft هنا
 } from 'lucide-react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
@@ -29,6 +29,7 @@ const PatientDetails = () => {
   const { isDarkMode } = useTheme();
 
   const doctorEmail = localStorage.getItem('user_email');
+  const userRole = localStorage.getItem('user_role'); // لضمان عمل منطق العودة
 
   const fetchDetail = useCallback(async () => {
     try {
@@ -47,6 +48,15 @@ const PatientDetails = () => {
   useEffect(() => {
     if (email) fetchDetail();
   }, [email, fetchDetail]);
+
+  // منطق العودة الخاص بصفحة البروفايل
+  const handleBackNavigation = () => {
+    if (userRole === 'doctor') {
+      navigate('/doctor-dashboard');
+    } else {
+      navigate('/patient-dashboard');
+    }
+  };
 
   const handleRequestAssessment = async () => {
     setRequesting(true);
@@ -138,13 +148,17 @@ const PatientDetails = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Navigation - ✅ تم النقل لليمين هنا */}
-        <div className="flex justify-end">
-          <button onClick={() => navigate(-1)} className={`flex items-center gap-2 mb-6 md:mb-10 font-black group transition-all text-[10px] md:text-xs uppercase tracking-widest
-            ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}>
-            <ArrowRight size={16} className={`group-hover:translate-x-1 transition-transform ${i18n.language === 'en' ? 'rotate-180' : ''}`} /> 
-            {t('back_to_dashboard')}
-          </button>
+        {/* ✅ الجزء الجديد: العودة للرئيسية (Profile Style) تم النقل لليمين */}
+        <div className={`flex ${i18n.language === 'ar' ? 'justify-start' : 'justify-end'} mb-6 md:mb-10 px-2`}>
+            <button 
+              onClick={handleBackNavigation}
+              className={`flex items-center gap-2 text-[10px] md:text-[11px] font-bold transition-all hover:gap-3
+                ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}
+            >
+              {i18n.language === 'ar' && <ChevronLeft size={14} className="rotate-180" />}
+              {t('back_to_dashboard')}
+              {i18n.language === 'en' && <ChevronLeft size={14} className="rotate-180" />}
+            </button>
         </div>
 
         {/* Patient Header Card */}
