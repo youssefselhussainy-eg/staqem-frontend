@@ -89,7 +89,7 @@ const PatientDetails = () => {
         confirmButtonColor: '#3b82f6',
         customClass: { 
           popup: 'rounded-[2rem] md:rounded-[3rem] border border-white/10 backdrop-blur-xl shadow-2xl animate-in zoom-in duration-300',
-          title: 'font-black text-2xl',
+          title: 'font-black text-xl md:text-2xl',
           confirmButton: 'rounded-2xl px-10 py-3 font-black transition-all hover:scale-105'
         }
       });
@@ -138,12 +138,14 @@ const PatientDetails = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Navigation */}
-        <button onClick={() => navigate(-1)} className={`flex items-center gap-2 mb-6 md:mb-10 font-black group transition-all text-[10px] md:text-xs uppercase tracking-widest
-          ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}>
-          <ArrowRight size={16} className={`group-hover:translate-x-1 transition-transform ${i18n.language === 'en' ? 'rotate-180' : ''}`} /> 
-          {t('back_to_dashboard')}
-        </button>
+        {/* Navigation - ✅ تم النقل لليمين هنا */}
+        <div className="flex justify-end">
+          <button onClick={() => navigate(-1)} className={`flex items-center gap-2 mb-6 md:mb-10 font-black group transition-all text-[10px] md:text-xs uppercase tracking-widest
+            ${isDarkMode ? 'text-slate-500 hover:text-blue-400' : 'text-slate-400 hover:text-blue-600'}`}>
+            <ArrowRight size={16} className={`group-hover:translate-x-1 transition-transform ${i18n.language === 'en' ? 'rotate-180' : ''}`} /> 
+            {t('back_to_dashboard')}
+          </button>
+        </div>
 
         {/* Patient Header Card */}
         <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-xl mb-6 md:mb-10 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10 transition-all duration-500
@@ -298,7 +300,6 @@ const PatientDetails = () => {
             <div className={`p-6 md:p-10 rounded-4xl md:rounded-[3.5rem] border backdrop-blur-sm transition-all duration-500 shadow-xl
               ${isDarkMode ? 'bg-white/3 border-white/5 shadow-black/20' : 'bg-white border-slate-100'}`}>
               <h3 className={`font-black text-lg md:text-xl mb-6 md:mb-10 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                {/* ✅ السطر الملعون الذي تم إصلاحه هنا */}
                 <History className="text-blue-500 md:w-6 md:h-6" size={20} /> {t('historical_logs')}
               </h3>
               <div className="space-y-4 md:space-y-5">
